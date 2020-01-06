@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainfall Prediction</title>
+<style>
+
+/* Navigation bar CSS Starts #Test */
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.centerElement {
+	padding: 5px 10px;
+	width: 300px;
+	left: 50%;
+	position: relative;
+	transform: translate(-50%);
+	text-align:center;
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	max-width:800px;
+	left: 50%;
+	position: relative;
+	transform: translate(-50%);
+	text-align:center;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+  color:black;
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+
+</style>
+
+<script>
+window.onload = function () {
+	
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: {
+		text: "Confidence level"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Confidence",
+		scaleBreaks: {
+			type: "wavy",
+			customBreaks: [{
+				startValue: 100,
+				endValue: 210
+				},
+				{
+					startValue: 230,
+					endValue: 600
+				}
+		]}
+	},
+	data: [{
+		type: "bar",
+		toolTipContent: "<img src=\"http://127.0.0.1:8000/templates/\"{url}\"\" style=\"width:40px; height:20px;\"> <b>{label}</b>",
+		dataPoints: [
+			{ label: "Heavy Rain", y: {{pred[3]}}, gdp: 0, url: "heavyrain.png" },
+			{ label: "Medium Rain", y: {{pred[2]}}, gdp: 0-2, url: "rain.png"},
+			{ label: "Light Rain", y: {{pred[1]}}, gdp: 5.7, url: "lightrain.jpg" },
+			{ label: "No Rain", y: {{pred[0]}}, gdp: 5.8, url: "norain.jpg" },
+
+
+		]
+	}]
+});
+chart.render();
+
+}
+</script>
+
+
+
+</head>
+<body style="color:white;background-position: right top;background:linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),url('templates/bg.jpg');background-size:cover; ">
+<div class="topnav">
+	<a href="http://127.0.0.1:8000/">Home</a>
+	<a class="active" href="http://127.0.0.1:8000/predict.html">Predict</a>
+	<a href="http://127.0.0.1:8000/visualization.html">Visualize</a>
+	<a href="http://127.0.0.1:8000/train">Train</a>
+</div>
+
+
+<h1 style="text-align:center;">Tomorrow's rainfall predictions are:</h1>
+
+<table>
+	<tr>
+		<th>Category</th>
+		<th>Chances</th>
+	</tr>
+	<tr>
+		<td>No Rain</td>
+		<td>{{pred[0]*100}}%</td>
+	</tr>
+	<tr>
+		<td>Light Rain</td>
+		<td>{{pred[1]*100}}%</td>
+	</tr>
+	<tr>
+		<td>Medium Rain</td>
+		<td>{{pred[2]*100}}%</td>
+	</tr>
+	<tr>
+		<td>Heavy Rain</td>
+		<td>{{pred[3]*100}}%</td>
+	</tr>
+ 
+</table>
+<br><br><br>
+<div id="chartContainer" style="height: 370px; width: 100%;max-width:800px;position:relative;left:50%;transform:translate(-50%);"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<br><br><br>
+
+
+<a href="http://127.0.0.1:8000/"><button style="color:white;font-size:20px;background-color:green;border:0;padding:12px 100px;width:500px;left:50%;position:relative;transform:translate(-50%);cursor: pointer;" type="submit">Go Back To Home</button></a>
+<br><br><br>
+</body>
+
+
+</html>

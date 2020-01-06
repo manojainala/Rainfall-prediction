@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainfall Prediction</title>
+<style>
+
+/* Navigation bar CSS Starts #Test */
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.centerElement {
+	padding: 5px 10px;
+	width: 300px;
+	left: 50%;
+	position: relative;
+	transform: translate(-50%);
+	text-align:center;
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+{% if yearlyRainfall == 1%}
+	<script>
+	window.onload = function() {
+	var chart1 = new CanvasJS.Chart("chartContainer1", {
+		animationEnabled: true,
+		title: {
+			text: "Rainfall Category Percentage"
+		},
+		data: [{
+			type: "pie",
+			startAngle: 240,
+			yValueFormatString: "##0.00\" days\"",
+			indexLabel: "{label} {y}",
+			dataPoints: [
+				{y: {{piechartLocation[0]}}, label: "No Rain"},
+				{y: {{piechartLocation[1]}}, label: "Light Rain"},
+				{y: {{piechartLocation[2]}}, label: "Medium Rain"},
+				{y: {{piechartLocation[3]}}, label: "High Rain"},
+			]
+		}]
+	});
+	
+	{% if monthlyRainfall == 1 %}
+		var chart2 = new CanvasJS.Chart("chartContainer2", {
+			animationEnabled: true,
+			title: {
+				text: "Rainfall Category Percentage"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\" days\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: {{piechartLocationAndYear[0]}}, label: "No Rain"},
+					{y: {{piechartLocationAndYear[1]}}, label: "Light Rain"},
+					{y: {{piechartLocationAndYear[2]}}, label: "Medium Rain"},
+					{y: {{piechartLocationAndYear[3]}}, label: "High Rain"},
+				]
+			}]
+		});
+		
+		{% if dailyRainfall == 1%}
+			var chart3 = new CanvasJS.Chart("chartContainer3", {
+			animationEnabled: true,
+			title: {
+				text: "Rainfall Category Percentage"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\" days\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+					{y: {{piechartLocationAndYearAndMonth[0]}}, label: "No Rain"},
+					{y: {{piechartLocationAndYearAndMonth[1]}}, label: "Light Rain"},
+					{y: {{piechartLocationAndYearAndMonth[2]}}, label: "Medium Rain"},
+					{y: {{piechartLocationAndYearAndMonth[3]}}, label: "High Rain"},
+				]
+			}]
+		});
+		
+		
+		{% endif %}
+		
+	{% endif %}
+	
+	
+	
+	chart1.render();
+	
+	{% if monthlyRainfall == 1 %}
+		chart2.render();
+		
+		{% if dailyRainfall == 1%}
+			chart3.render();
+		{% endif %}
+		
+	{% endif %}
+	}
+	</script>
+{% endif %}
+
+
+
+</head>
+<body style="color:white;background-position: right top;background:linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),url('templates/bg.jpg');background-size:cover; ">
+
+<div class="topnav">
+	<a href="http://127.0.0.1:8000/">Home</a>
+	<a href="http://127.0.0.1:8000/predict.html">Predict</a>
+	<a class="active" href="http://127.0.0.1:8000/visualization.html">Visualization</a>
+	<a href="http://127.0.0.1:8000/train">Train</a>
+</div>
+
+
+<h1 style="text-align:center;font-size:50px;">Data Visualization</h1>
+
+	<form style="margin: 0 auto;width: 500px;" method="POST" action="http://127.0.0.1:8000/visualization.html">
+
+	<p style="text-align:center;font-size:29px;">Select a location</p>
+	<select name="Location" class="centerElement" style="font-size:30px;">
+		<option>Albury</option> <option>BadgerysCreek</option> <option>Cobar</option> <option>CoffsHarbour</option> <option>Moree</option>
+		<option>Newcastle</option> <option>NorahHead</option> <option>NorfolkIsland</option> <option>Penrith</option> <option>Richmond</option>
+		<option>Sydney</option> <option>SydneyAirport</option> <option>WaggaWagga</option> <option>Williamtown</option>
+		<option>Wollongong</option> <option>Canberra</option> <option>Tuggeranong</option> <option>MountGinini</option> <option>Ballarat</option>
+		<option>Bendigo</option> <option>Sale</option> <option>MelbourneAirport</option> <option>Melbourne</option> <option>Mildura</option>
+		<option>Nhil</option> <option>Portland</option> <option>Watsonia</option> <option>Dartmoor</option> <option>Brisbane</option> <option>Cairns</option>
+		<option>GoldCoast</option> <option>Townsville</option> <option>Adelaide</option> <option>MountGambier</option> <option>Nuriootpa</option>
+		<option>Woomera</option> <option>Albany</option> <option>Witchcliffe</option> <option>PearceRAAF</option> <option>PerthAirport</option>
+		<option>Perth</option> <option>SalmonGums</option> <option>Walpole</option> <option>Hobart</option> <option>Launceston</option>
+		<option>AliceSprings</option> <option>Darwin</option> <option>Katherine</option> <option>Uluru</option>
+				
+	</select>
+	
+	
+	<br><br><br><br>
+	<button style="font-size:30px;color:white;background-color:green;border:0;padding:12px 100px;width:500px;left:50%;position:relative;transform:translate(-50%);" type="submit">Visualize</button>
+
+	</form>
+
+{% if yearlyRainfall == 1 %}
+	<br><br>
+	<img style="max-width:80%;position:relative;left:50%;transform:translate(-50%);" src="templates/yearlyRainfall.png?v={{randNum}}"></img>
+	<br><br>
+	<div id="chartContainer1" style="height: 370px; width: 100%;max-width:70%;position:relative;left:50%;transform:translate(-50%);"></div>
+	<br><br>
+	<form style="margin: 0 auto;width: 500px;" method="POST" action="http://127.0.0.1:8000/visualization.html">
+		<input type="hidden" name="Location" value="{{Location}}" />
+		<p style="text-align:center;font-size:29px;">Select a year</p>
+		<select name="year" class="centerElement" >
+		{%for i in range(totalYears) %} 
+			<option style="font-size:29px; " name="{{yearList[i]}}">{{yearList[i]}}</option>
+		{%endfor%}
+		</select>
+		<br><br>
+		<button style="font-size:30px;color:white;background-color:green;border:0;padding:12px 100px;width:500px;left:50%;position:relative;transform:translate(-50%);" type="submit">Visualize</button>
+
+	</form>
+
+	<br><br>
+	{% if monthlyRainfall == 1%}
+		<img style="max-width:80%;position:relative;left:50%;transform:translate(-50%);" src="templates/monthlyRainfall.png?v={{randNum}}"></img>
+		<br><br>
+		<div id="chartContainer2" style="height: 370px; width: 100%;max-width:70%;position:relative;left:50%;transform:translate(-50%);"></div>
+		<br><br>
+		<form style="margin: 0 auto;width: 500px;" method="POST" action="http://127.0.0.1:8000/visualization.html">
+			<input type="hidden" name="Location" value="{{Location}}" />
+			<input type="hidden" name="year" value="{{year}}" />
+			<p style="font-size:29px;text-align:center;">Select a month</p>
+			<select name="month" class="centerElement" >
+			{%for i in range(totalMonths) %} 
+				<option style="font-size:29px;" name="{{monthList[i]}}">{{monthList[i]}}</option>
+			{%endfor%}
+			</select>
+			<br><br>
+		<button style="font-size:30px;color:white;background-color:green;border:0;padding:12px 100px;width:500px;left:50%;position:relative;transform:translate(-50%);" type="submit">Visualize</button>
+
+		</form>
+
+		<br><br>
+	
+		{% if dailyRainfall == 1%}
+			<img style="max-width:80%;position:relative;left:50%;transform:translate(-50%);" src="templates/dailyRainfall.png?v={{randNum}}"></img>
+			<br><br>
+			<div id="chartContainer3" style="font-size:30px;height: 370px; width: 100%;max-width:70%;position:relative;left:50%;transform:translate(-50%);"></div>
+		{% endif %}
+	
+	
+	{% endif %}
+	
+{% endif %}
+
+
+<br><br><br><br>
+
+<a href="http://127.0.0.1:8000/"><button style="color:white;background-color:green;border:0;padding:12px 10px;width:300px;left:50%;position:relative;transform:translate(-50%);cursor: pointer;" type="submit">Go Back To Home</button></a>
+<br><br><br>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+
+
+</html>
