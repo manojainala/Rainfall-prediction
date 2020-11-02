@@ -1,4 +1,4 @@
-# Alzhiemers-Detection
+# Rainfall Prediction
 
 #to-do
 edit also here about A.
