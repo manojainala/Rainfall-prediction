@@ -1,7 +1,3 @@
 # Rainfall Prediction
 
-#to-do
-edit also here about A.
-
-#to-do
-tell repo structure and how to use it
+The main of this project is to predict the rainfall accross the 52 states in australia and the amount of rain fall. This pediction is done for both the long term and short term and also this is a classiication and regression problem.
